@@ -72,11 +72,15 @@ export function HowItWorks() {
                 </Button>
               </div>
             </div>
-            <div className="relative h-64 md:h-auto">
+            <div className="relative h-64 md:h-auto overflow-hidden">
               <img 
                 className="absolute inset-0 w-full h-full object-cover" 
-                src="https://images.unsplash.com/photo-1551887196-cf8081aec0be?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80"
+                src="https://images.unsplash.com/photo-1586671267731-da2cf3ceeb80?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80"
                 alt="Service provider caring for pets" 
+                onError={(e) => {
+                  // Fallback image if the primary one fails to load
+                  e.currentTarget.src = "https://images.unsplash.com/photo-1575859431774-2e57ed632664?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80";
+                }}
               />
             </div>
           </div>
