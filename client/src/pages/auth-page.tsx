@@ -200,189 +200,50 @@ export default function AuthPage() {
   }
 
   return (
-    <div className="min-h-screen bg-neutral-50">
-      {/* Header with logo */}
-      <header className="py-4 px-6 border-b">
-        <div className="container mx-auto">
-          <Link href="/" className="inline-flex items-center text-xl font-display font-bold text-primary-600">
-            <PawPrint className="mr-2 h-5 w-5" />
-            PawRest
-          </Link>
-        </div>
-      </header>
-      
-      <div className="container mx-auto px-4 py-8">
-        {registrationType === 'provider' ? (
-          <div className="max-w-4xl mx-auto mb-8">
-            <div className="flex justify-between items-center mb-6">
-              <div>
-                <h1 className="text-3xl font-display font-bold text-neutral-800">Register as a Service Provider</h1>
-                <p className="text-neutral-600 mt-1">Join our network of trusted pet memorial service providers in the Philippines. Complete the form below to apply.</p>
+    <div className="min-h-screen flex flex-col md:flex-row bg-neutral-50">
+      {/* Left side - Auth forms */}
+      <div className="flex-1 flex items-center justify-center p-4 md:p-8">
+        <div className="w-full max-w-md">
+          <div className="text-center mb-8">
+            <Link href="/" className="inline-flex items-center text-2xl font-display font-bold text-primary-600">
+              <PawPrint className="mr-2 h-6 w-6" />
+              PawRest
+            </Link>
+          </div>
+
+          {registrationType === 'provider' ? (
+            <div>
+              <div className="mb-6 text-center">
+                <h1 className="text-2xl font-bold mb-2">Register as a Service Provider</h1>
+                <p className="text-neutral-600">Join our network of trusted pet memorial service providers</p>
               </div>
-              <Button 
-                variant="outline" 
-                onClick={() => setRegistrationType('client')}
-                className="flex-shrink-0"
-              >
-                Register as Pet Parent
-              </Button>
-            </div>
-            
-            <Card className="border-t-4 border-t-primary-500">
-              <CardContent className="pt-6">
-                <Form {...providerRegisterForm}>
-                  <form 
-                    onSubmit={providerRegisterForm.handleSubmit(onProviderRegisterSubmit)} 
-                    className="space-y-8"
-                  >
-                    <Accordion type="single" collapsible defaultValue="personal">
-                      {/* Personal Information */}
-                      <AccordionItem value="personal">
-                        <AccordionTrigger className="text-lg font-medium py-4">
-                          <div className="flex items-center">
-                            <FileText className="mr-2 h-5 w-5 text-primary-500" />
-                            Personal Information
-                          </div>
-                        </AccordionTrigger>
-                        <AccordionContent>
-                          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-4">
-                            <FormField
-                              control={providerRegisterForm.control}
-                              name="firstName"
-                              render={({ field }) => (
-                                <FormItem>
-                                  <FormLabel>First Name</FormLabel>
-                                  <FormControl>
-                                    <Input placeholder="Enter your first name" {...field} />
-                                  </FormControl>
-                                  <FormMessage />
-                                </FormItem>
-                              )}
-                            />
-                            <FormField
-                              control={providerRegisterForm.control}
-                              name="lastName"
-                              render={({ field }) => (
-                                <FormItem>
-                                  <FormLabel>Last Name</FormLabel>
-                                  <FormControl>
-                                    <Input placeholder="Enter your last name" {...field} />
-                                  </FormControl>
-                                  <FormMessage />
-                                </FormItem>
-                              )}
-                            />
-                            <FormField
-                              control={providerRegisterForm.control}
-                              name="email"
-                              render={({ field }) => (
-                                <FormItem>
-                                  <FormLabel>Email Address</FormLabel>
-                                  <FormControl>
-                                    <Input type="email" placeholder="your.email@example.com" {...field} />
-                                  </FormControl>
-                                  <FormMessage />
-                                </FormItem>
-                              )}
-                            />
-                            <FormField
-                              control={providerRegisterForm.control}
-                              name="username"
-                              render={({ field }) => (
-                                <FormItem>
-                                  <FormLabel>Username</FormLabel>
-                                  <FormControl>
-                                    <Input placeholder="Choose a username" {...field} />
-                                  </FormControl>
-                                  <FormMessage />
-                                </FormItem>
-                              )}
-                            />
-                            <FormField
-                              control={providerRegisterForm.control}
-                              name="password"
-                              render={({ field }) => (
-                                <FormItem>
-                                  <FormLabel>Password</FormLabel>
-                                  <FormControl>
-                                    <Input type="password" placeholder="Create a secure password" {...field} />
-                                  </FormControl>
-                                  <FormDescription>
-                                    Password must be at least 8 characters long
-                                  </FormDescription>
-                                  <FormMessage />
-                                </FormItem>
-                              )}
-                            />
-                            <FormField
-                              control={providerRegisterForm.control}
-                              name="confirmPassword"
-                              render={({ field }) => (
-                                <FormItem>
-                                  <FormLabel>Confirm Password</FormLabel>
-                                  <FormControl>
-                                    <Input type="password" placeholder="Confirm your password" {...field} />
-                                  </FormControl>
-                                  <FormMessage />
-                                </FormItem>
-                              )}
-                            />
-                          </div>
-                        </AccordionContent>
-                      </AccordionItem>
-                      
-                      {/* Business Information */}
-                      <AccordionItem value="business">
-                        <AccordionTrigger className="text-lg font-medium py-4">
-                          <div className="flex items-center">
-                            <Landmark className="mr-2 h-5 w-5 text-primary-500" />
-                            Business Information
-                          </div>
-                        </AccordionTrigger>
-                        <AccordionContent>
-                          <div className="space-y-6 pt-4">
-                            <FormField
-                              control={providerRegisterForm.control}
-                              name="businessInfo.businessName"
-                              render={({ field }) => (
-                                <FormItem>
-                                  <FormLabel>Business Name</FormLabel>
-                                  <FormControl>
-                                    <Input placeholder="Your business name" {...field} />
-                                  </FormControl>
-                                  <FormMessage />
-                                </FormItem>
-                              )}
-                            />
-                            <FormField
-                              control={providerRegisterForm.control}
-                              name="businessInfo.businessDescription"
-                              render={({ field }) => (
-                                <FormItem>
-                                  <FormLabel>Business Description</FormLabel>
-                                  <FormControl>
-                                    <Textarea 
-                                      placeholder="Describe your pet memorial services and experience" 
-                                      {...field} 
-                                      className="min-h-32"
-                                    />
-                                  </FormControl>
-                                  <FormDescription>
-                                    Describe your pet memorial services and experience (100-500 characters)
-                                  </FormDescription>
-                                  <FormMessage />
-                                </FormItem>
-                              )}
-                            />
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              
+              <Card>
+                <CardContent className="pt-6">
+                  <Form {...providerRegisterForm}>
+                    <form 
+                      onSubmit={providerRegisterForm.handleSubmit(onProviderRegisterSubmit)} 
+                      className="space-y-8"
+                    >
+                      <Accordion type="single" collapsible defaultValue="personal">
+                        {/* Personal Information */}
+                        <AccordionItem value="personal">
+                          <AccordionTrigger className="text-lg font-medium py-2">
+                            <div className="flex items-center">
+                              <FileText className="mr-2 h-5 w-5 text-primary-500" />
+                              Personal Information
+                            </div>
+                          </AccordionTrigger>
+                          <AccordionContent>
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-4">
                               <FormField
                                 control={providerRegisterForm.control}
-                                name="businessInfo.businessPhone"
+                                name="firstName"
                                 render={({ field }) => (
                                   <FormItem>
-                                    <FormLabel>Business Phone</FormLabel>
+                                    <FormLabel>First Name</FormLabel>
                                     <FormControl>
-                                      <Input placeholder="+63 XXX XXX XXXX" {...field} />
+                                      <Input placeholder="Enter your first name" {...field} />
                                     </FormControl>
                                     <FormMessage />
                                   </FormItem>
@@ -390,12 +251,12 @@ export default function AuthPage() {
                               />
                               <FormField
                                 control={providerRegisterForm.control}
-                                name="businessInfo.businessAddress"
+                                name="lastName"
                                 render={({ field }) => (
                                   <FormItem>
-                                    <FormLabel>Business Address</FormLabel>
+                                    <FormLabel>Last Name</FormLabel>
                                     <FormControl>
-                                      <Input placeholder="Street address" {...field} />
+                                      <Input placeholder="Enter your last name" {...field} />
                                     </FormControl>
                                     <FormMessage />
                                   </FormItem>
@@ -403,12 +264,12 @@ export default function AuthPage() {
                               />
                               <FormField
                                 control={providerRegisterForm.control}
-                                name="businessInfo.city"
+                                name="email"
                                 render={({ field }) => (
-                                  <FormItem>
-                                    <FormLabel>City</FormLabel>
+                                  <FormItem className="col-span-2">
+                                    <FormLabel>Email Address</FormLabel>
                                     <FormControl>
-                                      <Input placeholder="City" {...field} />
+                                      <Input type="email" placeholder="your.email@example.com" {...field} />
                                     </FormControl>
                                     <FormMessage />
                                   </FormItem>
@@ -416,181 +277,248 @@ export default function AuthPage() {
                               />
                               <FormField
                                 control={providerRegisterForm.control}
-                                name="businessInfo.province"
+                                name="username"
+                                render={({ field }) => (
+                                  <FormItem className="col-span-2">
+                                    <FormLabel>Username</FormLabel>
+                                    <FormControl>
+                                      <Input placeholder="Choose a username" {...field} />
+                                    </FormControl>
+                                    <FormMessage />
+                                  </FormItem>
+                                )}
+                              />
+                              <FormField
+                                control={providerRegisterForm.control}
+                                name="password"
                                 render={({ field }) => (
                                   <FormItem>
-                                    <FormLabel>Province</FormLabel>
-                                    <Select 
-                                      onValueChange={field.onChange} 
-                                      defaultValue={field.value}
-                                    >
+                                    <FormLabel>Password</FormLabel>
+                                    <FormControl>
+                                      <Input type="password" placeholder="Create a secure password" {...field} />
+                                    </FormControl>
+                                    <FormDescription className="text-xs">
+                                      Must be at least 8 characters
+                                    </FormDescription>
+                                    <FormMessage />
+                                  </FormItem>
+                                )}
+                              />
+                              <FormField
+                                control={providerRegisterForm.control}
+                                name="confirmPassword"
+                                render={({ field }) => (
+                                  <FormItem>
+                                    <FormLabel>Confirm Password</FormLabel>
+                                    <FormControl>
+                                      <Input type="password" placeholder="Confirm your password" {...field} />
+                                    </FormControl>
+                                    <FormMessage />
+                                  </FormItem>
+                                )}
+                              />
+                            </div>
+                          </AccordionContent>
+                        </AccordionItem>
+                        
+                        {/* Business Information */}
+                        <AccordionItem value="business">
+                          <AccordionTrigger className="text-lg font-medium py-2">
+                            <div className="flex items-center">
+                              <Landmark className="mr-2 h-5 w-5 text-primary-500" />
+                              Business Information
+                            </div>
+                          </AccordionTrigger>
+                          <AccordionContent>
+                            <div className="space-y-4 pt-4">
+                              <FormField
+                                control={providerRegisterForm.control}
+                                name="businessInfo.businessName"
+                                render={({ field }) => (
+                                  <FormItem>
+                                    <FormLabel>Business Name</FormLabel>
+                                    <FormControl>
+                                      <Input placeholder="Your business name" {...field} />
+                                    </FormControl>
+                                    <FormMessage />
+                                  </FormItem>
+                                )}
+                              />
+                              <FormField
+                                control={providerRegisterForm.control}
+                                name="businessInfo.businessDescription"
+                                render={({ field }) => (
+                                  <FormItem>
+                                    <FormLabel>Business Description</FormLabel>
+                                    <FormControl>
+                                      <Textarea 
+                                        placeholder="Describe your pet memorial services and experience" 
+                                        {...field} 
+                                        className="min-h-24"
+                                      />
+                                    </FormControl>
+                                    <FormDescription className="text-xs">
+                                      100-500 characters
+                                    </FormDescription>
+                                    <FormMessage />
+                                  </FormItem>
+                                )}
+                              />
+                              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <FormField
+                                  control={providerRegisterForm.control}
+                                  name="businessInfo.businessPhone"
+                                  render={({ field }) => (
+                                    <FormItem>
+                                      <FormLabel>Business Phone</FormLabel>
                                       <FormControl>
-                                        <SelectTrigger>
-                                          <SelectValue placeholder="Select province" />
-                                        </SelectTrigger>
+                                        <Input placeholder="+63 XXX XXX XXXX" {...field} />
                                       </FormControl>
-                                      <SelectContent>
-                                        {philippineProvinces.map((province) => (
-                                          <SelectItem key={province} value={province}>
-                                            {province}
-                                          </SelectItem>
-                                        ))}
-                                      </SelectContent>
-                                    </Select>
-                                    <FormMessage />
-                                  </FormItem>
-                                )}
-                              />
+                                      <FormMessage />
+                                    </FormItem>
+                                  )}
+                                />
+                                <FormField
+                                  control={providerRegisterForm.control}
+                                  name="businessInfo.businessAddress"
+                                  render={({ field }) => (
+                                    <FormItem>
+                                      <FormLabel>Business Address</FormLabel>
+                                      <FormControl>
+                                        <Input placeholder="Street address" {...field} />
+                                      </FormControl>
+                                      <FormMessage />
+                                    </FormItem>
+                                  )}
+                                />
+                                <FormField
+                                  control={providerRegisterForm.control}
+                                  name="businessInfo.city"
+                                  render={({ field }) => (
+                                    <FormItem>
+                                      <FormLabel>City</FormLabel>
+                                      <FormControl>
+                                        <Input placeholder="City" {...field} />
+                                      </FormControl>
+                                      <FormMessage />
+                                    </FormItem>
+                                  )}
+                                />
+                                <FormField
+                                  control={providerRegisterForm.control}
+                                  name="businessInfo.province"
+                                  render={({ field }) => (
+                                    <FormItem>
+                                      <FormLabel>Province</FormLabel>
+                                      <Select 
+                                        onValueChange={field.onChange} 
+                                        defaultValue={field.value}
+                                      >
+                                        <FormControl>
+                                          <SelectTrigger>
+                                            <SelectValue placeholder="Select province" />
+                                          </SelectTrigger>
+                                        </FormControl>
+                                        <SelectContent>
+                                          {philippineProvinces.map((province) => (
+                                            <SelectItem key={province} value={province}>
+                                              {province}
+                                            </SelectItem>
+                                          ))}
+                                        </SelectContent>
+                                      </Select>
+                                      <FormMessage />
+                                    </FormItem>
+                                  )}
+                                />
+                                <FormField
+                                  control={providerRegisterForm.control}
+                                  name="businessInfo.zipCode"
+                                  render={({ field }) => (
+                                    <FormItem>
+                                      <FormLabel>ZIP/Postal Code</FormLabel>
+                                      <FormControl>
+                                        <Input placeholder="ZIP/Postal code" {...field} />
+                                      </FormControl>
+                                      <FormMessage />
+                                    </FormItem>
+                                  )}
+                                />
+                              </div>
+                            </div>
+                          </AccordionContent>
+                        </AccordionItem>
+                        
+                        {/* Required Documents */}
+                        <AccordionItem value="documents">
+                          <AccordionTrigger className="text-lg font-medium py-2">
+                            <div className="flex items-center">
+                              <Upload className="mr-2 h-5 w-5 text-primary-500" />
+                              Required Documents
+                            </div>
+                          </AccordionTrigger>
+                          <AccordionContent>
+                            <div className="space-y-4 pt-4">
+                              <p className="text-sm text-neutral-600">Please upload the following required documents:</p>
+                              
+                              <div className="space-y-4">
+                                <div className="border rounded-md p-3">
+                                  <p className="text-sm font-medium mb-2">BIR Certificate</p>
+                                  <Button variant="outline" size="sm" className="w-full" type="button">
+                                    <Upload className="h-4 w-4 mr-2" /> Choose File
+                                  </Button>
+                                  <p className="text-xs text-neutral-500 mt-1">No file chosen</p>
+                                </div>
+                                
+                                <div className="border rounded-md p-3">
+                                  <p className="text-sm font-medium mb-2">Business Permit</p>
+                                  <Button variant="outline" size="sm" className="w-full" type="button">
+                                    <Upload className="h-4 w-4 mr-2" /> Choose File
+                                  </Button>
+                                  <p className="text-xs text-neutral-500 mt-1">No file chosen</p>
+                                </div>
+                                
+                                <div className="border rounded-md p-3">
+                                  <p className="text-sm font-medium mb-2">Government ID</p>
+                                  <Button variant="outline" size="sm" className="w-full" type="button">
+                                    <Upload className="h-4 w-4 mr-2" /> Choose File
+                                  </Button>
+                                  <p className="text-xs text-neutral-500 mt-1">No file chosen</p>
+                                </div>
+                              </div>
+                              
+                              <div className="text-xs text-neutral-600">
+                                All documents must be in JPG, JPEG, PNG, or PDF format and less than 5MB in size.
+                              </div>
+                              
+                              {/* Document upload confirmation checkbox */}
                               <FormField
                                 control={providerRegisterForm.control}
-                                name="businessInfo.zipCode"
+                                name="documentUploadConfirmed"
                                 render={({ field }) => (
-                                  <FormItem>
-                                    <FormLabel>ZIP/Postal Code</FormLabel>
+                                  <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-3">
                                     <FormControl>
-                                      <Input placeholder="ZIP/Postal code" {...field} />
+                                      <Checkbox
+                                        checked={field.value}
+                                        onCheckedChange={field.onChange}
+                                      />
                                     </FormControl>
-                                    <FormMessage />
+                                    <div className="space-y-1 leading-none">
+                                      <FormLabel className="text-sm">
+                                        I will submit the required verification documents
+                                      </FormLabel>
+                                      <FormMessage />
+                                    </div>
                                   </FormItem>
                                 )}
                               />
                             </div>
-                          </div>
-                        </AccordionContent>
-                      </AccordionItem>
+                          </AccordionContent>
+                        </AccordionItem>
+                      </Accordion>
                       
-                      {/* Required Documents */}
-                      <AccordionItem value="documents">
-                        <AccordionTrigger className="text-lg font-medium py-4">
-                          <div className="flex items-center">
-                            <Upload className="mr-2 h-5 w-5 text-primary-500" />
-                            Required Documents
-                          </div>
-                        </AccordionTrigger>
-                        <AccordionContent>
-                          <div className="space-y-6 pt-4">
-                            <p className="text-neutral-600">Please upload the following required documents to complete your registration:</p>
-                            
-                            <div className="space-y-6">
-                              <div className="border rounded-lg p-4">
-                                <div className="flex justify-between items-start mb-3">
-                                  <div>
-                                    <h4 className="font-medium text-neutral-800 flex items-center">
-                                      <CreditCard className="h-4 w-4 mr-2 text-primary-500" />
-                                      BIR Certificate
-                                    </h4>
-                                    <p className="text-sm text-neutral-600">Bureau of Internal Revenue (BIR) Certificate of Registration</p>
-                                  </div>
-                                  <TooltipProvider>
-                                    <Tooltip>
-                                      <TooltipTrigger asChild>
-                                        <Info className="h-4 w-4 text-neutral-400" />
-                                      </TooltipTrigger>
-                                      <TooltipContent>
-                                        <p className="max-w-xs">Valid BIR Certificate is required to verify your business status</p>
-                                      </TooltipContent>
-                                    </Tooltip>
-                                  </TooltipProvider>
-                                </div>
-                                <div className="mt-2">
-                                  <Button variant="outline" className="w-full" type="button">
-                                    <Upload className="h-4 w-4 mr-2" /> Choose File
-                                  </Button>
-                                  <p className="text-xs text-neutral-500 mt-2">No file chosen</p>
-                                </div>
-                              </div>
-                              
-                              <div className="border rounded-lg p-4">
-                                <div className="flex justify-between items-start mb-3">
-                                  <div>
-                                    <h4 className="font-medium text-neutral-800 flex items-center">
-                                      <FileText className="h-4 w-4 mr-2 text-primary-500" />
-                                      Business Permit
-                                    </h4>
-                                    <p className="text-sm text-neutral-600">Local government-issued Business Permit</p>
-                                  </div>
-                                  <TooltipProvider>
-                                    <Tooltip>
-                                      <TooltipTrigger asChild>
-                                        <Info className="h-4 w-4 text-neutral-400" />
-                                      </TooltipTrigger>
-                                      <TooltipContent>
-                                        <p className="max-w-xs">Valid Business Permit confirms your authorization to operate</p>
-                                      </TooltipContent>
-                                    </Tooltip>
-                                  </TooltipProvider>
-                                </div>
-                                <div className="mt-2">
-                                  <Button variant="outline" className="w-full" type="button">
-                                    <Upload className="h-4 w-4 mr-2" /> Choose File
-                                  </Button>
-                                  <p className="text-xs text-neutral-500 mt-2">No file chosen</p>
-                                </div>
-                              </div>
-                              
-                              <div className="border rounded-lg p-4">
-                                <div className="flex justify-between items-start mb-3">
-                                  <div>
-                                    <h4 className="font-medium text-neutral-800 flex items-center">
-                                      <CreditCard className="h-4 w-4 mr-2 text-primary-500" />
-                                      Government ID
-                                    </h4>
-                                    <p className="text-sm text-neutral-600">Valid government-issued ID (e.g., Passport, Driver's License, UMID)</p>
-                                  </div>
-                                  <TooltipProvider>
-                                    <Tooltip>
-                                      <TooltipTrigger asChild>
-                                        <Info className="h-4 w-4 text-neutral-400" />
-                                      </TooltipTrigger>
-                                      <TooltipContent>
-                                        <p className="max-w-xs">Personal identification is required to verify your identity</p>
-                                      </TooltipContent>
-                                    </Tooltip>
-                                  </TooltipProvider>
-                                </div>
-                                <div className="mt-2">
-                                  <Button variant="outline" className="w-full" type="button">
-                                    <Upload className="h-4 w-4 mr-2" /> Choose File
-                                  </Button>
-                                  <p className="text-xs text-neutral-500 mt-2">No file chosen</p>
-                                </div>
-                              </div>
-                            </div>
-                            
-                            <div className="text-sm text-neutral-600">
-                              All documents must be in JPG, JPEG, PNG, or PDF format and less than 5MB in size.
-                            </div>
-                            
-                            {/* Document upload confirmation checkbox */}
-                            <FormField
-                              control={providerRegisterForm.control}
-                              name="documentUploadConfirmed"
-                              render={({ field }) => (
-                                <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4">
-                                  <FormControl>
-                                    <Checkbox
-                                      checked={field.value}
-                                      onCheckedChange={field.onChange}
-                                    />
-                                  </FormControl>
-                                  <div className="space-y-1 leading-none">
-                                    <FormLabel>
-                                      I understand that I will need to submit the required business verification documents after registration
-                                    </FormLabel>
-                                    <FormMessage />
-                                  </div>
-                                </FormItem>
-                              )}
-                            />
-                          </div>
-                        </AccordionContent>
-                      </AccordionItem>
-                    </Accordion>
-                    
-                    {/* Terms and Conditions */}
-                    <div className="space-y-6">
-                      <div className="border-t pt-6">
-                        <h3 className="font-medium text-lg mb-4">Terms and Conditions</h3>
+                      {/* Terms and Conditions */}
+                      <div className="space-y-4">
                         <FormField
                           control={providerRegisterForm.control}
                           name="termsAccepted"
@@ -603,7 +531,7 @@ export default function AuthPage() {
                                 />
                               </FormControl>
                               <div className="space-y-1 leading-none">
-                                <FormLabel>
+                                <FormLabel className="text-sm">
                                   I agree to the <Link href="#" className="text-primary-600 hover:underline">Terms and Conditions</Link> and <Link href="#" className="text-primary-600 hover:underline">Privacy Policy</Link>
                                 </FormLabel>
                                 <FormMessage />
@@ -611,53 +539,36 @@ export default function AuthPage() {
                             </FormItem>
                           )}
                         />
-                      </div>
-                      
-                      <div className="flex flex-col space-y-4">
+                        
                         <Button 
                           type="submit" 
-                          size="lg"
-                          className="bg-primary-600 hover:bg-primary-700"
+                          className="w-full"
                           disabled={registerMutation.isPending}
                         >
                           {registerMutation.isPending ? 'Submitting...' : 'Register as Provider'}
                         </Button>
-                        
-                        <div className="text-center text-sm text-neutral-600">
-                          Already have a provider account? <Link href="/auth" className="text-primary-600 hover:underline">Login</Link>
-                        </div>
                       </div>
-                    </div>
-                  </form>
-                </Form>
-              </CardContent>
-            </Card>
-            
-            <div className="mt-8 text-center">
-              <p className="text-neutral-600 mb-2">Looking for pet memorial services?</p>
-              <Button variant="outline" onClick={() => setRegistrationType('client')}>
-                Register as Pet Parent
-              </Button>
+                    </form>
+                  </Form>
+                </CardContent>
+                <CardFooter className="flex flex-col space-y-4 pt-4">
+                  <div className="text-center text-sm text-neutral-600">
+                    Already have an account? <Link href="/auth" className="text-primary-600 hover:underline">Login</Link>
+                  </div>
+                  <div className="text-center text-sm text-neutral-600">
+                    Looking for pet memorial services?{' '}
+                    <button 
+                      className="text-primary-600 hover:underline"
+                      onClick={() => setRegistrationType('client')}
+                    >
+                      Register as Pet Parent
+                    </button>
+                  </div>
+                </CardFooter>
+              </Card>
             </div>
-          </div>
-        ) : (
-          <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
-            {/* Login/Register Form */}
-            <div className="p-2">
-              <div className="mb-8">
-                {activeTab === 'login' ? (
-                  <>
-                    <h1 className="text-3xl font-display font-bold text-neutral-800">Welcome Back</h1>
-                    <p className="text-neutral-600 mt-1">Sign in to access your PawRest account</p>
-                  </>
-                ) : (
-                  <>
-                    <h1 className="text-3xl font-display font-bold text-neutral-800">Create an Account</h1>
-                    <p className="text-neutral-600 mt-1">Join PawRest as a pet parent</p>
-                  </>
-                )}
-              </div>
-              
+          ) : (
+            <>
               <Tabs 
                 defaultValue="login"
                 value={activeTab}
@@ -671,7 +582,13 @@ export default function AuthPage() {
 
                 <TabsContent value="login">
                   <Card>
-                    <CardContent className="pt-6">
+                    <CardHeader>
+                      <CardTitle>Welcome Back</CardTitle>
+                      <CardDescription>
+                        Sign in to your account to continue
+                      </CardDescription>
+                    </CardHeader>
+                    <CardContent>
                       <Form {...loginForm}>
                         <form 
                           onSubmit={loginForm.handleSubmit(onLoginSubmit)} 
@@ -710,11 +627,6 @@ export default function AuthPage() {
                               </FormItem>
                             )}
                           />
-                          <div className="text-right">
-                            <Link href="#" className="text-sm text-primary-600 hover:underline">
-                              Forgot your password?
-                            </Link>
-                          </div>
                           <Button 
                             type="submit" 
                             className="w-full"
@@ -725,7 +637,12 @@ export default function AuthPage() {
                         </form>
                       </Form>
                     </CardContent>
-                    <CardFooter className="flex flex-col space-y-4 border-t pt-4">
+                    <CardFooter className="flex flex-col space-y-4">
+                      <div className="text-center text-sm">
+                        <a href="#" className="text-primary-600 hover:underline">
+                          Forgot your password?
+                        </a>
+                      </div>
                       <div className="text-center text-sm text-neutral-600">
                         Don't have an account?{' '}
                         <button 
@@ -741,7 +658,13 @@ export default function AuthPage() {
 
                 <TabsContent value="register">
                   <Card>
-                    <CardContent className="pt-6">
+                    <CardHeader>
+                      <CardTitle>Create an Account</CardTitle>
+                      <CardDescription>
+                        Join PawRest to access pet memorial services
+                      </CardDescription>
+                    </CardHeader>
+                    <CardContent>
                       <Form {...clientRegisterForm}>
                         <form 
                           onSubmit={clientRegisterForm.handleSubmit(onClientRegisterSubmit)} 
@@ -755,7 +678,7 @@ export default function AuthPage() {
                                 <FormItem>
                                   <FormLabel>First Name</FormLabel>
                                   <FormControl>
-                                    <Input placeholder="Enter your first name" {...field} />
+                                    <Input placeholder="First name" {...field} />
                                   </FormControl>
                                   <FormMessage />
                                 </FormItem>
@@ -768,7 +691,7 @@ export default function AuthPage() {
                                 <FormItem>
                                   <FormLabel>Last Name</FormLabel>
                                   <FormControl>
-                                    <Input placeholder="Enter your last name" {...field} />
+                                    <Input placeholder="Last name" {...field} />
                                   </FormControl>
                                   <FormMessage />
                                 </FormItem>
@@ -874,80 +797,73 @@ export default function AuthPage() {
                         </form>
                       </Form>
                     </CardContent>
-                    <CardFooter className="flex justify-between border-t pt-4">
-                      <div className="text-center text-sm text-neutral-600">
-                        Already have an account?{' '}
-                        <button 
-                          className="text-primary-600 hover:underline"
-                          onClick={() => setActiveTab('login')}
-                        >
-                          Sign in
-                        </button>
-                      </div>
-                      <div className="text-center text-sm text-neutral-600">
-                        <button 
-                          className="text-primary-600 hover:underline"
-                          onClick={() => setRegistrationType('provider')}
-                        >
-                          Register as Provider
-                        </button>
+                    <CardFooter className="flex justify-center">
+                      <div className="flex flex-col items-center space-y-4">
+                        <div className="text-center text-sm text-neutral-600">
+                          Already have an account?{' '}
+                          <button 
+                            className="text-primary-600 hover:underline"
+                            onClick={() => setActiveTab('login')}
+                          >
+                            Sign in
+                          </button>
+                        </div>
+                        <div className="text-center text-sm">
+                          <button 
+                            className="text-primary-600 hover:underline"
+                            onClick={() => setRegistrationType('provider')}
+                          >
+                            Register as Service Provider
+                          </button>
+                        </div>
                       </div>
                     </CardFooter>
                   </Card>
                 </TabsContent>
               </Tabs>
-            </div>
-            
-            {/* Information Card */}
-            <div className="hidden md:block p-2">
-              <div className="bg-primary-50 rounded-xl p-8 h-full">
-                <div className="flex flex-col h-full">
-                  <h2 className="text-2xl font-display font-bold text-primary-800 mb-6">Honor their memory with dignity and love</h2>
-                  
-                  <div className="space-y-6 mb-8">
-                    <div className="flex items-start">
-                      <div className="mt-1 mr-4 bg-primary-100 p-2 rounded-full text-primary-700">
-                        <Check className="h-5 w-5" />
-                      </div>
-                      <div>
-                        <h3 className="font-medium text-primary-900">Trusted Service Providers</h3>
-                        <p className="text-primary-800/80">Verified memorial service professionals dedicated to compassionate care</p>
-                      </div>
-                    </div>
-                    
-                    <div className="flex items-start">
-                      <div className="mt-1 mr-4 bg-primary-100 p-2 rounded-full text-primary-700">
-                        <Check className="h-5 w-5" />
-                      </div>
-                      <div>
-                        <h3 className="font-medium text-primary-900">Personalized Services</h3>
-                        <p className="text-primary-800/80">Customized memorial options to celebrate your pet's unique personality</p>
-                      </div>
-                    </div>
-                    
-                    <div className="flex items-start">
-                      <div className="mt-1 mr-4 bg-primary-100 p-2 rounded-full text-primary-700">
-                        <Check className="h-5 w-5" />
-                      </div>
-                      <div>
-                        <h3 className="font-medium text-primary-900">Supportive Community</h3>
-                        <p className="text-primary-800/80">Join a caring network of pet parents who understand your journey</p>
-                      </div>
-                    </div>
-                  </div>
-                  
-                  <div className="mt-auto">
-                    <div className="border-t border-primary-200 pt-6">
-                      <blockquote className="italic text-primary-800/90">
-                        "Our companions leave paw prints on our hearts. Honor their memory with the dignified farewell they deserve."
-                      </blockquote>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+            </>
+          )}
+        </div>
+      </div>
+
+      {/* Right side - Hero Image */}
+      <div className="hidden md:flex md:w-1/2 bg-primary-600">
+        <div className="relative flex-1 flex flex-col justify-center p-12 text-white">
+          <div className="absolute inset-0 bg-cover bg-center opacity-75" 
+               style={{ backgroundImage: `url('https://images.unsplash.com/photo-1583337130417-3346a1be7dee?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2000&q=80')` }}>
           </div>
-        )}
+          <div className="absolute inset-0 bg-black/30"></div>
+          <div className="relative z-10">
+            <h1 className="text-4xl font-bold font-display mb-6 text-white drop-shadow-lg">Honor their memory with dignity and love</h1>
+            <p className="text-lg text-white mb-8 drop-shadow-lg">PawRest connects you with compassionate memorial service providers who understand the special bond you shared with your companion.</p>
+            <ul className="space-y-4 text-white drop-shadow">
+              <li className="flex items-center">
+                <span className="bg-white/30 rounded-full p-1 mr-3">
+                  <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
+                  </svg>
+                </span>
+                Trusted and verified service providers
+              </li>
+              <li className="flex items-center">
+                <span className="bg-white/30 rounded-full p-1 mr-3">
+                  <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
+                  </svg>
+                </span>
+                Personalized memorial services
+              </li>
+              <li className="flex items-center">
+                <span className="bg-white/30 rounded-full p-1 mr-3">
+                  <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
+                  </svg>
+                </span>
+                24/7 compassionate support
+              </li>
+            </ul>
+          </div>
+        </div>
       </div>
     </div>
   );
