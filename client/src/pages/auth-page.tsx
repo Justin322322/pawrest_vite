@@ -337,18 +337,18 @@ export default function AuthPage() {
       </div>
 
       {/* Right side - Hero Image */}
-      <div className="hidden md:flex md:w-1/2 bg-primary-600">
-        <div className="relative flex-1 flex flex-col justify-center p-12 text-white">
-          <div className="absolute inset-0 bg-cover bg-center opacity-40" 
-               style={{ backgroundImage: `url('https://images.unsplash.com/photo-1583337130417-3346a1be7dee?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2000&q=80')` }}>
-          </div>
-          <div className="absolute inset-0 bg-gradient-to-r from-primary-700/80 to-primary-600/70"></div>
-          <div className="relative z-10">
-            <h1 className="text-4xl font-bold font-display mb-6">Honor their memory with dignity and love</h1>
-            <p className="text-lg opacity-90 mb-8">PawRest connects you with compassionate memorial service providers who understand the special bond you shared with your companion.</p>
-            <ul className="space-y-4">
+      <div className="hidden md:flex md:w-1/2 relative overflow-hidden">
+        <div className="absolute inset-0 bg-cover bg-center" 
+             style={{ backgroundImage: `url('https://images.unsplash.com/photo-1583337130417-3346a1be7dee?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2000&q=80')` }}>
+        </div>
+        <div className="absolute inset-0 bg-black/60"></div>
+        <div className="relative z-10 flex-1 flex flex-col justify-center p-12">
+          <div className="bg-white rounded-lg p-8 shadow-xl">
+            <h1 className="text-4xl font-bold font-display mb-6 text-primary-700">Honor their memory with dignity and love</h1>
+            <p className="text-lg text-neutral-700 mb-8">PawRest connects you with compassionate memorial service providers who understand the special bond you shared with your companion.</p>
+            <ul className="space-y-4 text-neutral-700">
               <li className="flex items-center">
-                <span className="bg-white/20 rounded-full p-1 mr-3">
+                <span className="bg-primary-100 text-primary-600 rounded-full p-1 mr-3">
                   <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
                   </svg>
@@ -356,7 +356,7 @@ export default function AuthPage() {
                 Trusted and verified service providers
               </li>
               <li className="flex items-center">
-                <span className="bg-white/20 rounded-full p-1 mr-3">
+                <span className="bg-primary-100 text-primary-600 rounded-full p-1 mr-3">
                   <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
                   </svg>
@@ -364,7 +364,7 @@ export default function AuthPage() {
                 Personalized memorial services
               </li>
               <li className="flex items-center">
-                <span className="bg-white/20 rounded-full p-1 mr-3">
+                <span className="bg-primary-100 text-primary-600 rounded-full p-1 mr-3">
                   <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
                   </svg>
