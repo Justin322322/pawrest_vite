@@ -9,19 +9,40 @@ export enum UserRole {
   ADMIN = "admin",
 }
 
+// Business information schema for providers
+export const businessInfoSchema = z.object({
+  businessName: z.string().min(1, "Business name is required"),
+  businessDescription: z.string().min(100, "Description must be at least 100 characters").max(500, "Description must be less than 500 characters"),
+  businessPhone: z.string().min(1, "Business phone is required"),
+  businessAddress: z.string().min(1, "Business address is required"),
+  city: z.string().min(1, "City is required"),
+  province: z.string().min(1, "Province is required"),
+  zipCode: z.string().min(1, "ZIP/Postal code is required"),
+  birCertificateUrl: z.string().optional(),
+  businessPermitUrl: z.string().optional(),
+  governmentIdUrl: z.string().optional(),
+  documentsSubmitted: z.boolean().default(false),
+});
+
+// Define the expected type for business info
+export type BusinessInfo = z.infer<typeof businessInfoSchema>;
+
 // Users table schema
 export const users = pgTable("users", {
   id: serial("id").primaryKey(),
   username: text("username").notNull().unique(),
   password: text("password").notNull(),
   email: text("email").notNull().unique(),
+  firstName: text("first_name").notNull(),
+  lastName: text("last_name").notNull(),
   fullName: text("full_name").notNull(),
   role: text("role").$type<UserRole>().notNull().default(UserRole.CLIENT),
   profileImage: text("profile_image"),
   phoneNumber: text("phone_number"),
   address: text("address"),
   isVerified: boolean("is_verified").default(false),
-  businessInfo: json("business_info"),
+  businessInfo: json("business_info").$type<BusinessInfo>(),
+  termsAccepted: boolean("terms_accepted").default(false),
 });
 
 // Services table schema
@@ -64,6 +85,27 @@ export const insertUserSchema = createInsertSchema(users).omit({
   id: true,
   businessInfo: true,
   isVerified: true,
+  fullName: true, // We'll compute this from firstName and lastName
+});
+
+// Add combined schema for provider registration form
+export const providerRegistrationSchema = insertUserSchema.extend({
+  confirmPassword: z.string().min(8, 'Password must be at least 8 characters long'),
+  businessInfo: businessInfoSchema.omit({
+    birCertificateUrl: true,
+    businessPermitUrl: true,
+    governmentIdUrl: true,
+    documentsSubmitted: true
+  }),
+  termsAccepted: z.boolean().refine(val => val === true, {
+    message: 'You must accept the terms and conditions'
+  }),
+  documentUploadConfirmed: z.boolean().refine(val => val === true, {
+    message: 'You must confirm that you will submit the required documents'
+  })
+}).refine((data) => data.password === data.confirmPassword, {
+  message: "Passwords don't match",
+  path: ["confirmPassword"],
 });
 
 export const insertServiceSchema = createInsertSchema(services).omit({

@@ -74,26 +74,61 @@ export function setupAuth(app: Express) {
 
   app.post("/api/register", async (req, res, next) => {
     try {
-      const existingUser = await storage.getUserByUsername(req.body.username);
+      // Validate required fields
+      const { username, email, password, firstName, lastName, role } = req.body;
+      
+      if (!username || !email || !password || !firstName || !lastName || !role) {
+        return res.status(400).send("Missing required fields");
+      }
+      
+      // Compute fullName from firstName and lastName
+      const fullName = `${firstName} ${lastName}`;
+      
+      // Check if username already exists
+      const existingUser = await storage.getUserByUsername(username);
       if (existingUser) {
         return res.status(400).send("Username already exists");
       }
 
-      const existingEmail = await storage.getUserByEmail(req.body.email);
+      // Check if email already exists
+      const existingEmail = await storage.getUserByEmail(email);
       if (existingEmail) {
         return res.status(400).send("Email already exists");
       }
-
-      const user = await storage.createUser({
+      
+      // Create user with proper structure
+      const userData = {
         ...req.body,
-        password: await hashPassword(req.body.password),
-      });
+        fullName,
+        password: await hashPassword(password),
+      };
+      
+      // For providers, ensure businessInfo is properly structured
+      if (role === UserRole.PROVIDER) {
+        // Set isVerified to false for providers requiring document verification
+        userData.isVerified = false;
+        
+        // Ensure businessInfo is an object if it's not provided
+        if (!userData.businessInfo) {
+          userData.businessInfo = {};
+        }
+        
+        // Set documentsSubmitted to false if not explicitly provided
+        if (userData.businessInfo && !userData.businessInfo.documentsSubmitted) {
+          userData.businessInfo.documentsSubmitted = false;
+        }
+      }
 
+      // Create the user in storage
+      const user = await storage.createUser(userData);
+
+      // Log the user in
       req.login(user, (err) => {
         if (err) return next(err);
         res.status(201).json(user);
       });
     } catch (error) {
+      console.error("Registration error:", error);
       next(error);
     }
   });
