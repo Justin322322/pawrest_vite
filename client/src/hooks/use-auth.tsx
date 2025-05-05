@@ -4,10 +4,31 @@ import {
   useMutation,
   UseMutationResult,
 } from "@tanstack/react-query";
-import { insertUserSchema, User as SelectUser, InsertUser, UserRole } from "@shared/schema";
+import { 
+  insertUserSchema, 
+  User as SelectUser, 
+  InsertUser, 
+  UserRole, 
+  providerRegistrationSchema, 
+  BusinessInfo
+} from "@shared/schema";
 import { getQueryFn, apiRequest, queryClient } from "../lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
 import { useLocation } from "wouter";
+
+// Custom type for registration that combines client and provider registration
+type RegisterData = {
+  username: string;
+  password: string;
+  email: string;
+  firstName: string;
+  lastName: string;
+  role: UserRole;
+  phoneNumber?: string;
+  address?: string;
+  termsAccepted?: boolean;
+  businessInfo?: Partial<BusinessInfo>;
+};
 
 type AuthContextType = {
   user: SelectUser | null;
@@ -15,7 +36,7 @@ type AuthContextType = {
   error: Error | null;
   loginMutation: UseMutationResult<SelectUser, Error, LoginData>;
   logoutMutation: UseMutationResult<void, Error, void>;
-  registerMutation: UseMutationResult<SelectUser, Error, InsertUser>;
+  registerMutation: UseMutationResult<SelectUser, Error, RegisterData>;
 };
 
 type LoginData = Pick<InsertUser, "username" | "password">;
@@ -65,7 +86,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   });
 
   const registerMutation = useMutation({
-    mutationFn: async (credentials: InsertUser) => {
+    mutationFn: async (credentials: RegisterData) => {
       const res = await apiRequest("POST", "/api/register", credentials);
       return await res.json();
     },
