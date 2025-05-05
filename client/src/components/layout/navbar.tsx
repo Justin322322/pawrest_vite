@@ -60,7 +60,7 @@ export function Navbar() {
               <span className={`font-display font-bold text-xl ${scrolled ? 'text-primary-700' : 'text-white'} transition-colors`}>PawRest</span>
             </Link>
           </div>
-          
+
           <div className="hidden md:flex space-x-8">
             <Link href="/#services" className={`${scrolled ? 'text-neutral-700' : 'text-white'} hover:text-primary-300 transition-colors px-3 py-2 text-sm font-bold drop-shadow-sm`}>
               Services
@@ -75,7 +75,7 @@ export function Navbar() {
               FAQs
             </Link>
           </div>
-          
+
           <div className="flex items-center space-x-3">
             {user ? (
               <DropdownMenu>
@@ -106,7 +106,7 @@ export function Navbar() {
                     <Link href="/profile" className="cursor-pointer">Profile</Link>
                   </DropdownMenuItem>
                   <DropdownMenuSeparator />
-                  <DropdownMenuItem 
+                  <DropdownMenuItem
                     className="cursor-pointer"
                     onClick={handleLogout}
                     disabled={logoutMutation.isPending}
@@ -121,15 +121,15 @@ export function Navbar() {
                   Sign In
                 </Link>
                 <Link href="/auth" className={`transition-all duration-300 px-4 py-2 rounded-md text-sm font-bold drop-shadow-sm ${
-                  scrolled 
-                    ? 'bg-primary-500 hover:bg-primary-600 text-white' 
+                  scrolled
+                    ? 'bg-white hover:bg-gray-100 text-black border border-gray-200'
                     : 'bg-white/20 hover:bg-white/30 backdrop-blur-sm text-white'
                 }`}>
                   Register
                 </Link>
               </>
             )}
-            <button 
+            <button
               className={`md:hidden ${scrolled ? 'text-neutral-700' : 'text-white'} hover:text-primary-300 transition-colors`}
               onClick={toggleMobileMenu}
               aria-label="Toggle menu"
@@ -148,52 +148,71 @@ export function Navbar() {
       {mobileMenuOpen && (
         <div className="md:hidden bg-white shadow-lg py-4">
           <div className="container mx-auto px-4 space-y-1">
-            <Link 
-              href="/#services" 
+            <Link
+              href="/#services"
               className="block py-2 px-3 text-neutral-600 hover:bg-primary-50 hover:text-primary-500 rounded-md"
               onClick={() => setMobileMenuOpen(false)}
             >
               Services
             </Link>
-            <Link 
-              href="/#how-it-works" 
+            <Link
+              href="/#how-it-works"
               className="block py-2 px-3 text-neutral-600 hover:bg-primary-50 hover:text-primary-500 rounded-md"
               onClick={() => setMobileMenuOpen(false)}
             >
               How It Works
             </Link>
-            <Link 
-              href="/#testimonials" 
+            <Link
+              href="/#testimonials"
               className="block py-2 px-3 text-neutral-600 hover:bg-primary-50 hover:text-primary-500 rounded-md"
               onClick={() => setMobileMenuOpen(false)}
             >
               Testimonials
             </Link>
-            <Link 
-              href="/#faq" 
+            <Link
+              href="/#faq"
               className="block py-2 px-3 text-neutral-600 hover:bg-primary-50 hover:text-primary-500 rounded-md"
               onClick={() => setMobileMenuOpen(false)}
             >
               FAQs
             </Link>
+            {!user && (
+              <>
+                <div className="border-t border-gray-200 my-2 pt-2"></div>
+                <Link
+                  href="/auth"
+                  className="block py-2 px-3 text-neutral-600 hover:bg-primary-50 hover:text-primary-500 rounded-md"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  Sign In
+                </Link>
+                <Link
+                  href="/auth"
+                  className="block py-2 px-3 text-neutral-600 hover:bg-primary-50 hover:text-primary-500 rounded-md"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  Register
+                </Link>
+              </>
+            )}
             {user && (
               <>
                 <div className="border-t border-gray-200 my-2 pt-2"></div>
-                <Link 
-                  href={getDashboardLink()} 
+                <Link
+                  href={getDashboardLink()}
                   className="block py-2 px-3 text-neutral-600 hover:bg-primary-50 hover:text-primary-500 rounded-md"
                   onClick={() => setMobileMenuOpen(false)}
                 >
                   Dashboard
                 </Link>
-                <Link 
-                  href="/profile" 
+                <Link
+                  href="/profile"
                   className="block py-2 px-3 text-neutral-600 hover:bg-primary-50 hover:text-primary-500 rounded-md"
                   onClick={() => setMobileMenuOpen(false)}
                 >
                   Profile
                 </Link>
-                <button 
+                <button
                   onClick={() => {
                     handleLogout();
                     setMobileMenuOpen(false);

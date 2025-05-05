@@ -5,9 +5,9 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Redirect } from 'wouter';
 import { PawPrint, Upload, Check, Info, FileText, CreditCard, Landmark } from 'lucide-react';
 import { useAuth } from '@/hooks/use-auth';
-import { 
-  UserRole, 
-  businessInfoSchema, 
+import {
+  UserRole,
+  businessInfoSchema,
   providerRegistrationSchema
 } from '@shared/schema';
 
@@ -100,6 +100,8 @@ export default function AuthPage() {
   const [activeTab, setActiveTab] = useState<string>('login');
   const [registrationType, setRegistrationType] = useState<'client' | 'provider'>('client');
   const { user, loginMutation, registerMutation } = useAuth();
+
+
 
   // Login form
   const loginForm = useForm<LoginFormValues>({
@@ -217,12 +219,12 @@ export default function AuthPage() {
                 <h1 className="text-2xl font-bold mb-2">Register as a Service Provider</h1>
                 <p className="text-neutral-600">Join our network of trusted pet memorial service providers</p>
               </div>
-              
+
               <Card>
                 <CardContent className="pt-6">
                   <Form {...providerRegisterForm}>
-                    <form 
-                      onSubmit={providerRegisterForm.handleSubmit(onProviderRegisterSubmit)} 
+                    <form
+                      onSubmit={providerRegisterForm.handleSubmit(onProviderRegisterSubmit)}
                       className="space-y-8"
                     >
                       <Accordion type="single" collapsible defaultValue="personal">
@@ -320,7 +322,7 @@ export default function AuthPage() {
                             </div>
                           </AccordionContent>
                         </AccordionItem>
-                        
+
                         {/* Business Information */}
                         <AccordionItem value="business">
                           <AccordionTrigger className="text-lg font-medium py-2">
@@ -351,9 +353,9 @@ export default function AuthPage() {
                                   <FormItem>
                                     <FormLabel>Business Description</FormLabel>
                                     <FormControl>
-                                      <Textarea 
-                                        placeholder="Describe your pet memorial services and experience" 
-                                        {...field} 
+                                      <Textarea
+                                        placeholder="Describe your pet memorial services and experience"
+                                        {...field}
                                         className="min-h-24"
                                       />
                                     </FormControl>
@@ -410,8 +412,8 @@ export default function AuthPage() {
                                   render={({ field }) => (
                                     <FormItem>
                                       <FormLabel>Province</FormLabel>
-                                      <Select 
-                                        onValueChange={field.onChange} 
+                                      <Select
+                                        onValueChange={field.onChange}
                                         defaultValue={field.value}
                                       >
                                         <FormControl>
@@ -448,7 +450,7 @@ export default function AuthPage() {
                             </div>
                           </AccordionContent>
                         </AccordionItem>
-                        
+
                         {/* Required Documents */}
                         <AccordionItem value="documents">
                           <AccordionTrigger className="text-lg font-medium py-2">
@@ -460,7 +462,7 @@ export default function AuthPage() {
                           <AccordionContent>
                             <div className="space-y-4 pt-4">
                               <p className="text-sm text-neutral-600">Please upload the following required documents:</p>
-                              
+
                               <div className="space-y-4">
                                 <div className="border rounded-md p-3">
                                   <p className="text-sm font-medium mb-2">BIR Certificate</p>
@@ -469,7 +471,7 @@ export default function AuthPage() {
                                   </Button>
                                   <p className="text-xs text-neutral-500 mt-1">No file chosen</p>
                                 </div>
-                                
+
                                 <div className="border rounded-md p-3">
                                   <p className="text-sm font-medium mb-2">Business Permit</p>
                                   <Button variant="outline" size="sm" className="w-full" type="button">
@@ -477,7 +479,7 @@ export default function AuthPage() {
                                   </Button>
                                   <p className="text-xs text-neutral-500 mt-1">No file chosen</p>
                                 </div>
-                                
+
                                 <div className="border rounded-md p-3">
                                   <p className="text-sm font-medium mb-2">Government ID</p>
                                   <Button variant="outline" size="sm" className="w-full" type="button">
@@ -486,11 +488,11 @@ export default function AuthPage() {
                                   <p className="text-xs text-neutral-500 mt-1">No file chosen</p>
                                 </div>
                               </div>
-                              
+
                               <div className="text-xs text-neutral-600">
                                 All documents must be in JPG, JPEG, PNG, or PDF format and less than 5MB in size.
                               </div>
-                              
+
                               {/* Document upload confirmation checkbox */}
                               <FormField
                                 control={providerRegisterForm.control}
@@ -516,7 +518,7 @@ export default function AuthPage() {
                           </AccordionContent>
                         </AccordionItem>
                       </Accordion>
-                      
+
                       {/* Terms and Conditions */}
                       <div className="space-y-4">
                         <FormField
@@ -539,10 +541,10 @@ export default function AuthPage() {
                             </FormItem>
                           )}
                         />
-                        
-                        <Button 
-                          type="submit" 
-                          className="w-full"
+
+                        <Button
+                          type="submit"
+                          className="w-full bg-blue-500 hover:bg-blue-600 text-white transition-colors"
                           disabled={registerMutation.isPending}
                         >
                           {registerMutation.isPending ? 'Submitting...' : 'Register as Provider'}
@@ -552,24 +554,35 @@ export default function AuthPage() {
                   </Form>
                 </CardContent>
                 <CardFooter className="flex flex-col space-y-4 pt-4">
-                  <div className="text-center text-sm text-neutral-600">
-                    Already have an account? <Link href="/auth" className="text-primary-600 hover:underline">Login</Link>
+                  <div className="text-center mb-2">
+                    <div className="text-sm text-neutral-600 mb-2">
+                      Already have an account?
+                    </div>
+                    <Button
+                      variant="outline"
+                      className="w-full border-blue-300 text-blue-600 hover:bg-blue-50 hover:text-blue-700 transition-colors"
+                      asChild
+                    >
+                      <Link href="/auth">Sign in</Link>
+                    </Button>
                   </div>
-                  <div className="text-center text-sm text-neutral-600">
-                    Looking for pet memorial services?{' '}
-                    <button 
-                      className="text-primary-600 hover:underline"
+                  <div className="text-center">
+                    <div className="text-sm text-neutral-600 mb-2">
+                      Looking for pet memorial services?
+                    </div>
+                    <Button
+                      className="w-full bg-blue-500 hover:bg-blue-600 text-white transition-colors"
                       onClick={() => setRegistrationType('client')}
                     >
                       Register as Pet Parent
-                    </button>
+                    </Button>
                   </div>
                 </CardFooter>
               </Card>
             </div>
           ) : (
             <>
-              <Tabs 
+              <Tabs
                 defaultValue="login"
                 value={activeTab}
                 onValueChange={setActiveTab}
@@ -590,8 +603,8 @@ export default function AuthPage() {
                     </CardHeader>
                     <CardContent>
                       <Form {...loginForm}>
-                        <form 
-                          onSubmit={loginForm.handleSubmit(onLoginSubmit)} 
+                        <form
+                          onSubmit={loginForm.handleSubmit(onLoginSubmit)}
                           className="space-y-4"
                         >
                           <FormField
@@ -601,9 +614,9 @@ export default function AuthPage() {
                               <FormItem>
                                 <FormLabel>Username</FormLabel>
                                 <FormControl>
-                                  <Input 
-                                    placeholder="Enter your username" 
-                                    {...field} 
+                                  <Input
+                                    placeholder="Enter your username"
+                                    {...field}
                                   />
                                 </FormControl>
                                 <FormMessage />
@@ -617,18 +630,18 @@ export default function AuthPage() {
                               <FormItem>
                                 <FormLabel>Password</FormLabel>
                                 <FormControl>
-                                  <Input 
-                                    type="password" 
-                                    placeholder="Enter your password" 
-                                    {...field} 
+                                  <Input
+                                    type="password"
+                                    placeholder="Enter your password"
+                                    {...field}
                                   />
                                 </FormControl>
                                 <FormMessage />
                               </FormItem>
                             )}
                           />
-                          <Button 
-                            type="submit" 
+                          <Button
+                            type="submit"
                             className="w-full"
                             disabled={loginMutation.isPending}
                           >
@@ -645,7 +658,7 @@ export default function AuthPage() {
                       </div>
                       <div className="text-center text-sm text-neutral-600">
                         Don't have an account?{' '}
-                        <button 
+                        <button
                           className="text-primary-600 hover:underline"
                           onClick={() => setActiveTab('register')}
                         >
@@ -666,8 +679,8 @@ export default function AuthPage() {
                     </CardHeader>
                     <CardContent>
                       <Form {...clientRegisterForm}>
-                        <form 
-                          onSubmit={clientRegisterForm.handleSubmit(onClientRegisterSubmit)} 
+                        <form
+                          onSubmit={clientRegisterForm.handleSubmit(onClientRegisterSubmit)}
                           className="space-y-4"
                         >
                           <div className="grid grid-cols-2 gap-4">
@@ -705,10 +718,10 @@ export default function AuthPage() {
                               <FormItem>
                                 <FormLabel>Email</FormLabel>
                                 <FormControl>
-                                  <Input 
-                                    type="email" 
-                                    placeholder="Enter your email" 
-                                    {...field} 
+                                  <Input
+                                    type="email"
+                                    placeholder="Enter your email"
+                                    {...field}
                                   />
                                 </FormControl>
                                 <FormMessage />
@@ -722,9 +735,9 @@ export default function AuthPage() {
                               <FormItem>
                                 <FormLabel>Username</FormLabel>
                                 <FormControl>
-                                  <Input 
-                                    placeholder="Choose a username" 
-                                    {...field} 
+                                  <Input
+                                    placeholder="Choose a username"
+                                    {...field}
                                   />
                                 </FormControl>
                                 <FormMessage />
@@ -739,10 +752,10 @@ export default function AuthPage() {
                                 <FormItem>
                                   <FormLabel>Password</FormLabel>
                                   <FormControl>
-                                    <Input 
-                                      type="password" 
-                                      placeholder="Create a password" 
-                                      {...field} 
+                                    <Input
+                                      type="password"
+                                      placeholder="Create a password"
+                                      {...field}
                                     />
                                   </FormControl>
                                   <FormMessage />
@@ -756,10 +769,10 @@ export default function AuthPage() {
                                 <FormItem>
                                   <FormLabel>Confirm Password</FormLabel>
                                   <FormControl>
-                                    <Input 
-                                      type="password" 
-                                      placeholder="Confirm password" 
-                                      {...field} 
+                                    <Input
+                                      type="password"
+                                      placeholder="Confirm password"
+                                      {...field}
                                     />
                                   </FormControl>
                                   <FormMessage />
@@ -787,8 +800,8 @@ export default function AuthPage() {
                               </FormItem>
                             )}
                           />
-                          <Button 
-                            type="submit" 
+                          <Button
+                            type="submit"
                             className="w-full"
                             disabled={registerMutation.isPending}
                           >
@@ -799,22 +812,28 @@ export default function AuthPage() {
                     </CardContent>
                     <CardFooter className="flex justify-center">
                       <div className="flex flex-col items-center space-y-4">
-                        <div className="text-center text-sm text-neutral-600">
-                          Already have an account?{' '}
-                          <button 
-                            className="text-primary-600 hover:underline"
+                        <div className="text-center mb-2">
+                          <div className="text-sm text-neutral-600 mb-2">
+                            Already have an account?
+                          </div>
+                          <Button
+                            variant="outline"
+                            className="w-full border-blue-300 text-blue-600 hover:bg-blue-50 hover:text-blue-700 transition-colors"
                             onClick={() => setActiveTab('login')}
                           >
                             Sign in
-                          </button>
+                          </Button>
                         </div>
-                        <div className="text-center text-sm">
-                          <button 
-                            className="text-primary-600 hover:underline"
+                        <div className="text-center">
+                          <div className="text-sm text-neutral-600 mb-2">
+                            Want to offer memorial services?
+                          </div>
+                          <Button
+                            className="w-full bg-blue-500 hover:bg-blue-600 text-white transition-colors"
                             onClick={() => setRegistrationType('provider')}
                           >
                             Register as Service Provider
-                          </button>
+                          </Button>
                         </div>
                       </div>
                     </CardFooter>
@@ -829,7 +848,7 @@ export default function AuthPage() {
       {/* Right side - Hero Image */}
       <div className="hidden md:flex md:w-1/2 bg-primary-600">
         <div className="relative flex-1 flex flex-col justify-center p-12 text-white">
-          <div className="absolute inset-0 bg-cover bg-center opacity-75" 
+          <div className="absolute inset-0 bg-cover bg-center opacity-75"
                style={{ backgroundImage: `url('https://images.unsplash.com/photo-1583337130417-3346a1be7dee?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2000&q=80')` }}>
           </div>
           <div className="absolute inset-0 bg-black/30"></div>
