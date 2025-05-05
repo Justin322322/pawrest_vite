@@ -54,24 +54,24 @@ export function Navbar() {
         <div className="flex justify-between items-center h-16">
           <div className="flex items-center">
             <Link href="/" className="flex items-center space-x-2">
-              <span className="text-primary-500 text-2xl">
+              <span className={`${scrolled ? 'text-primary-500' : 'text-white'} text-2xl transition-colors`}>
                 <PawPrint className="h-6 w-6" />
               </span>
-              <span className="font-display font-semibold text-xl text-primary-700">PawRest</span>
+              <span className={`font-display font-bold text-xl ${scrolled ? 'text-primary-700' : 'text-white'} transition-colors`}>PawRest</span>
             </Link>
           </div>
           
           <div className="hidden md:flex space-x-8">
-            <Link href="/#services" className="text-neutral-600 hover:text-primary-500 transition-colors px-3 py-2 text-sm font-medium">
+            <Link href="/#services" className={`${scrolled ? 'text-neutral-700' : 'text-white'} hover:text-primary-300 transition-colors px-3 py-2 text-sm font-bold drop-shadow-sm`}>
               Services
             </Link>
-            <Link href="/#how-it-works" className="text-neutral-600 hover:text-primary-500 transition-colors px-3 py-2 text-sm font-medium">
+            <Link href="/#how-it-works" className={`${scrolled ? 'text-neutral-700' : 'text-white'} hover:text-primary-300 transition-colors px-3 py-2 text-sm font-bold drop-shadow-sm`}>
               How It Works
             </Link>
-            <Link href="/#testimonials" className="text-neutral-600 hover:text-primary-500 transition-colors px-3 py-2 text-sm font-medium">
+            <Link href="/#testimonials" className={`${scrolled ? 'text-neutral-700' : 'text-white'} hover:text-primary-300 transition-colors px-3 py-2 text-sm font-bold drop-shadow-sm`}>
               Testimonials
             </Link>
-            <Link href="/#faq" className="text-neutral-600 hover:text-primary-500 transition-colors px-3 py-2 text-sm font-medium">
+            <Link href="/#faq" className={`${scrolled ? 'text-neutral-700' : 'text-white'} hover:text-primary-300 transition-colors px-3 py-2 text-sm font-bold drop-shadow-sm`}>
               FAQs
             </Link>
           </div>
@@ -117,16 +117,16 @@ export function Navbar() {
               </DropdownMenu>
             ) : (
               <>
-                <Link href="/auth" className="text-primary-600 hover:text-primary-700 transition-colors px-3 py-2 text-sm font-medium">
+                <Link href="/auth" className={`${scrolled ? 'text-primary-600 hover:text-primary-700' : 'text-white hover:text-primary-200'} transition-colors px-3 py-2 text-sm font-bold drop-shadow-sm`}>
                   Sign In
                 </Link>
-                <Link href="/auth" className="bg-primary-500 text-white hover:bg-primary-600 transition-colors px-4 py-2 rounded-md text-sm font-medium">
+                <Link href="/auth" className={`${scrolled ? 'bg-primary-500 hover:bg-primary-600' : 'bg-white/20 backdrop-blur-sm hover:bg-white/30'} text-white transition-colors px-4 py-2 rounded-md text-sm font-bold drop-shadow-sm`}>
                   Register
                 </Link>
               </>
             )}
             <button 
-              className="md:hidden text-neutral-500 hover:text-neutral-700"
+              className={`md:hidden ${scrolled ? 'text-neutral-700' : 'text-white'} hover:text-primary-300 transition-colors`}
               onClick={toggleMobileMenu}
               aria-label="Toggle menu"
             >
