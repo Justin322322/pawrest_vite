@@ -120,7 +120,11 @@ export function Navbar() {
                 <Link href="/auth" className={`${scrolled ? 'text-primary-600 hover:text-primary-700' : 'text-white hover:text-primary-200'} transition-colors px-3 py-2 text-sm font-bold drop-shadow-sm`}>
                   Sign In
                 </Link>
-                <Link href="/auth" className={`${scrolled ? 'bg-primary-500 hover:bg-primary-600' : 'bg-white/20 backdrop-blur-sm hover:bg-white/30'} text-white transition-colors px-4 py-2 rounded-md text-sm font-bold drop-shadow-sm`}>
+                <Link href="/auth" className={`transition-all duration-300 px-4 py-2 rounded-md text-sm font-bold drop-shadow-sm ${
+                  scrolled 
+                    ? 'bg-primary-500 hover:bg-primary-600 text-white' 
+                    : 'bg-white/20 hover:bg-white/30 backdrop-blur-sm text-white'
+                }`}>
                   Register
                 </Link>
               </>
