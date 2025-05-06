@@ -14,7 +14,11 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { UserRole } from '@shared/schema';
 
-export function Navbar() {
+type NavbarProps = {
+  variant?: 'default' | 'dashboard';
+};
+
+export function Navbar({ variant = 'default' }: NavbarProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [location] = useLocation();
@@ -61,20 +65,22 @@ export function Navbar() {
             </Link>
           </div>
 
-          <div className="hidden md:flex space-x-8">
-            <Link href="/#services" className={`${scrolled ? 'text-neutral-700' : 'text-white'} hover:text-primary-300 transition-colors px-3 py-2 text-sm font-bold drop-shadow-sm`}>
-              Services
-            </Link>
-            <Link href="/#how-it-works" className={`${scrolled ? 'text-neutral-700' : 'text-white'} hover:text-primary-300 transition-colors px-3 py-2 text-sm font-bold drop-shadow-sm`}>
-              How It Works
-            </Link>
-            <Link href="/#testimonials" className={`${scrolled ? 'text-neutral-700' : 'text-white'} hover:text-primary-300 transition-colors px-3 py-2 text-sm font-bold drop-shadow-sm`}>
-              Testimonials
-            </Link>
-            <Link href="/#faq" className={`${scrolled ? 'text-neutral-700' : 'text-white'} hover:text-primary-300 transition-colors px-3 py-2 text-sm font-bold drop-shadow-sm`}>
-              FAQs
-            </Link>
-          </div>
+          {variant === 'default' && (
+            <div className="hidden md:flex space-x-8">
+              <Link href="/#services" className={`${scrolled ? 'text-neutral-700' : 'text-white'} hover:text-primary-300 transition-colors px-3 py-2 text-sm font-bold drop-shadow-sm`}>
+                Services
+              </Link>
+              <Link href="/#how-it-works" className={`${scrolled ? 'text-neutral-700' : 'text-white'} hover:text-primary-300 transition-colors px-3 py-2 text-sm font-bold drop-shadow-sm`}>
+                How It Works
+              </Link>
+              <Link href="/#testimonials" className={`${scrolled ? 'text-neutral-700' : 'text-white'} hover:text-primary-300 transition-colors px-3 py-2 text-sm font-bold drop-shadow-sm`}>
+                Testimonials
+              </Link>
+              <Link href="/#faq" className={`${scrolled ? 'text-neutral-700' : 'text-white'} hover:text-primary-300 transition-colors px-3 py-2 text-sm font-bold drop-shadow-sm`}>
+                FAQs
+              </Link>
+            </div>
+          )}
 
           <div className="flex items-center space-x-3">
             {user ? (
@@ -148,34 +154,38 @@ export function Navbar() {
       {mobileMenuOpen && (
         <div className="md:hidden bg-white shadow-lg py-4">
           <div className="container mx-auto px-4 space-y-1">
-            <Link
-              href="/#services"
-              className="block py-2 px-3 text-neutral-600 hover:bg-primary-50 hover:text-primary-500 rounded-md"
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              Services
-            </Link>
-            <Link
-              href="/#how-it-works"
-              className="block py-2 px-3 text-neutral-600 hover:bg-primary-50 hover:text-primary-500 rounded-md"
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              How It Works
-            </Link>
-            <Link
-              href="/#testimonials"
-              className="block py-2 px-3 text-neutral-600 hover:bg-primary-50 hover:text-primary-500 rounded-md"
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              Testimonials
-            </Link>
-            <Link
-              href="/#faq"
-              className="block py-2 px-3 text-neutral-600 hover:bg-primary-50 hover:text-primary-500 rounded-md"
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              FAQs
-            </Link>
+            {variant === 'default' && (
+              <>
+                <Link
+                  href="/#services"
+                  className="block py-2 px-3 text-neutral-600 hover:bg-primary-50 hover:text-primary-500 rounded-md"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  Services
+                </Link>
+                <Link
+                  href="/#how-it-works"
+                  className="block py-2 px-3 text-neutral-600 hover:bg-primary-50 hover:text-primary-500 rounded-md"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  How It Works
+                </Link>
+                <Link
+                  href="/#testimonials"
+                  className="block py-2 px-3 text-neutral-600 hover:bg-primary-50 hover:text-primary-500 rounded-md"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  Testimonials
+                </Link>
+                <Link
+                  href="/#faq"
+                  className="block py-2 px-3 text-neutral-600 hover:bg-primary-50 hover:text-primary-500 rounded-md"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  FAQs
+                </Link>
+              </>
+            )}
             {!user && (
               <>
                 <div className="border-t border-gray-200 my-2 pt-2"></div>

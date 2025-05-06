@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { PawPrint, Plus, ArrowRight, Loader2 } from 'lucide-react';
 import { Navbar } from '@/components/layout/navbar';
-import { Footer } from '@/components/layout/footer';
 import { useAuth } from '@/hooks/use-auth';
 import { Button } from '@/components/ui/button';
 import {
@@ -21,9 +20,24 @@ import {
 } from '@/components/ui/tabs';
 import { serviceTypes } from '@shared/schema';
 
+// Define booking type to fix TypeScript errors
+interface Booking {
+  id: number;
+  clientId: number;
+  providerId: number;
+  serviceId: number;
+  serviceName: string;
+  status: string;
+  scheduledDate: string;
+  notes: string;
+  totalPrice: number;
+}
+
 export default function ClientDashboard() {
   const { user } = useAuth();
   const [activeTab, setActiveTab] = useState('services');
+
+  console.log("Client Dashboard - Current user:", user);
 
   // Fetch data
   const { data: services, isLoading: isLoadingServices } = useQuery({
@@ -31,28 +45,56 @@ export default function ClientDashboard() {
     initialData: serviceTypes
   });
 
-  const { data: bookings, isLoading: isLoadingBookings } = useQuery({
+  const { data: bookings, isLoading: isLoadingBookings, error: bookingsError } = useQuery<Booking[]>({
     queryKey: ['/api/client/bookings'],
     queryFn: async () => {
       try {
+        console.log("Fetching client bookings with credentials");
         const res = await fetch('/api/client/bookings', {
           credentials: 'include',
         });
+
         if (!res.ok) {
-          throw new Error('Failed to fetch bookings');
+          console.error(`Failed to fetch bookings: ${res.status} ${res.statusText}`);
+          if (res.status === 401) {
+            console.error("Authentication error when fetching bookings");
+          } else if (res.status === 403) {
+            console.error("Authorization error: User doesn't have client role");
+          }
+          throw new Error(`Failed to fetch bookings: ${res.status} ${res.statusText}`);
         }
-        return await res.json();
+
+        const data = await res.json();
+        console.log("Successfully fetched client bookings:", data);
+        return data as Booking[];
       } catch (error) {
+        console.error("Error fetching client bookings:", error);
         return [];
       }
     },
     initialData: [],
   });
 
+  if (bookingsError) {
+    console.error("Bookings query error:", bookingsError);
+  }
+
   if (!user) {
+    console.log("No user found in client dashboard, showing loading state");
     return (
       <div className="flex items-center justify-center min-h-screen">
         <Loader2 className="h-8 w-8 animate-spin text-border" />
+      </div>
+    );
+  }
+
+  // Verify user has client role
+  if (user.role !== 'client' && user.role !== 'admin') {
+    console.error(`User has incorrect role for client dashboard: ${user.role}`);
+    return (
+      <div className="flex items-center justify-center min-h-screen flex-col">
+        <div className="text-red-500 mb-4">Access Error</div>
+        <div className="text-gray-700">You don't have permission to access the client dashboard.</div>
       </div>
     );
   }
@@ -74,7 +116,7 @@ export default function ClientDashboard() {
 
   return (
     <div className="min-h-screen flex flex-col">
-      <Navbar />
+      <Navbar variant="dashboard" />
       <main className="flex-grow pt-20 pb-20 bg-neutral-50">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="mb-8">
@@ -99,10 +141,10 @@ export default function ClientDashboard() {
                   services?.map((service) => (
                     <Card key={service.id} className="overflow-hidden transition-all duration-300 hover:shadow-md">
                       <div className="h-48 overflow-hidden">
-                        <img 
-                          className="w-full h-full object-cover" 
-                          src={service.imageUrl} 
-                          alt={service.name} 
+                        <img
+                          className="w-full h-full object-cover"
+                          src={service.imageUrl}
+                          alt={service.name}
                         />
                       </div>
                       <CardHeader className="p-6 pb-2">
@@ -138,10 +180,10 @@ export default function ClientDashboard() {
                           </span>
                         </div>
                         <CardDescription>
-                          Scheduled for {new Date(booking.scheduledDate).toLocaleDateString('en-US', { 
-                            weekday: 'long', 
-                            year: 'numeric', 
-                            month: 'long', 
+                          Scheduled for {new Date(booking.scheduledDate).toLocaleDateString('en-US', {
+                            weekday: 'long',
+                            year: 'numeric',
+                            month: 'long',
                             day: 'numeric',
                             hour: '2-digit',
                             minute: '2-digit'
@@ -215,7 +257,6 @@ export default function ClientDashboard() {
           </Tabs>
         </div>
       </main>
-      <Footer />
     </div>
   );
 }

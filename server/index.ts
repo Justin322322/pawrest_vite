@@ -1,6 +1,12 @@
 import express, { type Request, Response, NextFunction } from "express";
 import { registerRoutes } from "./routes";
 import { setupVite, serveStatic, log } from "./vite";
+import { testConnection, initDatabase, createDatabaseIfNotExists } from "./db";
+import { errorHandler } from "./error-handler";
+import * as dotenv from 'dotenv';
+
+// Load environment variables from .env file
+dotenv.config();
 
 const app = express();
 app.use(express.json());
@@ -37,7 +43,41 @@ app.use((req, res, next) => {
 });
 
 (async () => {
+  // Initialize MySQL database if using MySQL
+  if (process.env.USE_MYSQL === 'true' || process.env.NODE_ENV === 'production') {
+    try {
+      // First, create the database if it doesn't exist
+      log('Creating database if it does not exist...');
+      const dbCreated = await createDatabaseIfNotExists();
+
+      if (dbCreated) {
+        // Test database connection
+        const connected = await testConnection();
+        if (connected) {
+          log('MySQL connection successful');
+
+          // Initialize database tables
+          const initialized = await initDatabase();
+          if (initialized) {
+            log('MySQL database initialized successfully');
+          } else {
+            log('Failed to initialize MySQL database');
+          }
+        } else {
+          log('Failed to connect to MySQL database');
+        }
+      } else {
+        log('Failed to create MySQL database');
+      }
+    } catch (error) {
+      console.error('Error initializing MySQL:', error);
+    }
+  }
+
   const server = await registerRoutes(app);
+
+  // Add global error handler middleware (must be after routes)
+  app.use(errorHandler);
 
   app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
     const status = err.status || err.statusCode || 500;

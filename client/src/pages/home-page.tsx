@@ -1,5 +1,4 @@
 import { Navbar } from '@/components/layout/navbar';
-import { Footer } from '@/components/layout/footer';
 import { HeroSection } from '@/components/home/hero-section';
 import { TrustBadges } from '@/components/home/trust-badges';
 import { ServicesSection } from '@/components/home/services-section';
@@ -16,13 +15,13 @@ export default function HomePage() {
     const handleAnchorClick = (e: MouseEvent) => {
       const target = e.target as HTMLElement;
       const anchor = target.closest('a');
-      
+
       if (anchor && anchor.getAttribute('href')?.startsWith('#')) {
         e.preventDefault();
-        
+
         const targetId = anchor.getAttribute('href');
         if (targetId === '#') return;
-        
+
         const targetElement = document.querySelector(targetId as string);
         if (targetElement) {
           window.scrollTo({
@@ -34,7 +33,7 @@ export default function HomePage() {
     };
 
     document.addEventListener('click', handleAnchorClick);
-    
+
     return () => {
       document.removeEventListener('click', handleAnchorClick);
     };
@@ -53,7 +52,6 @@ export default function HomePage() {
         <FAQSection />
         <CallToAction />
       </main>
-      <Footer />
     </div>
   );
 }

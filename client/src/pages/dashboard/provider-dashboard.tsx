@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { 
-  PawPrint, 
-  Plus, 
-  ArrowRight, 
-  Loader2, 
-  Calendar, 
-  Users, 
+import {
+  PawPrint,
+  Plus,
+  ArrowRight,
+  Loader2,
+  Calendar,
+  Users,
   DollarSign,
   PieChart
 } from 'lucide-react';
@@ -81,27 +81,27 @@ export default function ProviderDashboard() {
 
   // Stats for the overview tab
   const stats = [
-    { 
-      title: 'Total Bookings', 
-      value: bookings.length, 
+    {
+      title: 'Total Bookings',
+      value: bookings.length,
       icon: <Calendar className="h-5 w-5 text-primary-500" />,
       color: 'bg-primary-50'
     },
-    { 
-      title: 'Total Clients', 
-      value: [...new Set(bookings.map((booking: any) => booking.clientId))].length, 
+    {
+      title: 'Total Clients',
+      value: [...new Set(bookings.map((booking: any) => booking.clientId))].length,
       icon: <Users className="h-5 w-5 text-blue-500" />,
       color: 'bg-blue-50'
     },
-    { 
-      title: 'Active Services', 
-      value: services.filter((service: any) => service.isActive).length, 
+    {
+      title: 'Active Services',
+      value: services.filter((service: any) => service.isActive).length,
       icon: <PawPrint className="h-5 w-5 text-purple-500" />,
       color: 'bg-purple-50'
     },
-    { 
-      title: 'Total Revenue', 
-      value: `$${bookings.reduce((sum: number, booking: any) => sum + booking.totalPrice, 0).toLocaleString()}`, 
+    {
+      title: 'Total Revenue',
+      value: `$${bookings.reduce((sum: number, booking: any) => sum + booking.totalPrice, 0).toLocaleString()}`,
       icon: <DollarSign className="h-5 w-5 text-green-500" />,
       color: 'bg-green-50'
     }
@@ -124,7 +124,7 @@ export default function ProviderDashboard() {
 
   return (
     <div className="min-h-screen flex flex-col">
-      <Navbar />
+      <Navbar variant="dashboard" />
       <main className="flex-grow pt-20 pb-20 bg-neutral-50">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="mb-8 flex flex-col md:flex-row md:items-center md:justify-between">
@@ -238,10 +238,10 @@ export default function ProviderDashboard() {
                   services.map((service: any) => (
                     <Card key={service.id} className="overflow-hidden transition-all duration-300 hover:shadow-md">
                       <div className="h-48 overflow-hidden">
-                        <img 
-                          className="w-full h-full object-cover" 
-                          src={service.imageUrl || 'https://images.unsplash.com/photo-1608096299210-db7e38487075?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80'} 
-                          alt={service.name} 
+                        <img
+                          className="w-full h-full object-cover"
+                          src={service.imageUrl || 'https://images.unsplash.com/photo-1608096299210-db7e38487075?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80'}
+                          alt={service.name}
                         />
                       </div>
                       <CardHeader className="p-6 pb-2">
@@ -297,10 +297,10 @@ export default function ProviderDashboard() {
                           </span>
                         </div>
                         <CardDescription>
-                          Scheduled for {new Date(booking.scheduledDate).toLocaleDateString('en-US', { 
-                            weekday: 'long', 
-                            year: 'numeric', 
-                            month: 'long', 
+                          Scheduled for {new Date(booking.scheduledDate).toLocaleDateString('en-US', {
+                            weekday: 'long',
+                            year: 'numeric',
+                            month: 'long',
                             day: 'numeric',
                             hour: '2-digit',
                             minute: '2-digit'
@@ -402,7 +402,7 @@ export default function ProviderDashboard() {
                       <h3 className="text-sm font-medium text-neutral-500">Business Address</h3>
                       <p className="mt-1 text-neutral-800">{user.address || 'Not provided'}</p>
                     </div>
-                    
+
                     <div className="md:col-span-2">
                       <h3 className="text-sm font-medium text-neutral-500">Document Verification</h3>
                       {user.isVerified ? (

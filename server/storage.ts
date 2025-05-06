@@ -1,10 +1,11 @@
 import { users, services, bookings, reviews } from "@shared/schema";
-import type { 
-  User, Service, Booking, Review, 
-  InsertUser, InsertService, InsertBooking, InsertReview 
+import type {
+  User, Service, Booking, Review,
+  InsertUser, InsertService, InsertBooking, InsertReview
 } from "@shared/schema";
 import session from "express-session";
 import createMemoryStore from "memorystore";
+import { MySQLStorage } from "./mysql-storage";
 
 const MemoryStore = createMemoryStore(session);
 
@@ -18,13 +19,13 @@ export interface IStorage {
   createUser(user: InsertUser): Promise<User>;
   getAllUsers(): Promise<User[]>;
   verifyProvider(id: number): Promise<User>;
-  
+
   // Service operations
   getService(id: number): Promise<Service | undefined>;
   getServicesByProviderId(providerId: number): Promise<Service[]>;
   createService(service: InsertService): Promise<Service>;
   updateService(id: number, service: Partial<Service>): Promise<Service>;
-  
+
   // Booking operations
   getBooking(id: number): Promise<Booking | undefined>;
   getBookingsByClientId(clientId: number): Promise<Booking[]>;
@@ -32,12 +33,12 @@ export interface IStorage {
   createBooking(booking: InsertBooking): Promise<Booking>;
   updateBookingStatus(id: number, status: string): Promise<Booking>;
   getAllBookings(): Promise<Booking[]>;
-  
+
   // Review operations
   getReview(id: number): Promise<Review | undefined>;
   getReviewsByProviderId(providerId: number): Promise<Review[]>;
   createReview(review: InsertReview): Promise<Review>;
-  
+
   // Session store
   sessionStore: session.SessionStore;
 }
@@ -59,12 +60,12 @@ export class MemStorage implements IStorage {
     this.services = new Map();
     this.bookings = new Map();
     this.reviews = new Map();
-    
+
     this.userIdCounter = 1;
     this.serviceIdCounter = 1;
     this.bookingIdCounter = 1;
     this.reviewIdCounter = 1;
-    
+
     this.sessionStore = new MemoryStore({
       checkPeriod: 86400000, // prune expired entries every 24h
     });
@@ -103,7 +104,7 @@ export class MemStorage implements IStorage {
     if (!user) {
       throw new Error("User not found");
     }
-    
+
     const updatedUser: User = { ...user, isVerified: true };
     this.users.set(id, updatedUser);
     return updatedUser;
@@ -132,7 +133,7 @@ export class MemStorage implements IStorage {
     if (!service) {
       throw new Error("Service not found");
     }
-    
+
     const updatedService: Service = { ...service, ...serviceUpdate };
     this.services.set(id, updatedService);
     return updatedService;
@@ -167,7 +168,7 @@ export class MemStorage implements IStorage {
     if (!booking) {
       throw new Error("Booking not found");
     }
-    
+
     const updatedBooking: Booking = { ...booking, status };
     this.bookings.set(id, updatedBooking);
     return updatedBooking;
@@ -196,4 +197,9 @@ export class MemStorage implements IStorage {
   }
 }
 
-export const storage = new MemStorage();
+// Choose which storage implementation to use
+// For development/testing, you can use MemStorage
+// For production, use MySQLStorage
+const useMySQL = process.env.USE_MYSQL === 'true' || process.env.NODE_ENV === 'production';
+
+export const storage = useMySQL ? new MySQLStorage() : new MemStorage();

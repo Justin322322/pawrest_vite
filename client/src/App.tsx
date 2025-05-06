@@ -8,16 +8,33 @@ import HomePage from "@/pages/home-page";
 import AuthPage from "@/pages/auth-page";
 import ClientDashboard from "@/pages/dashboard/client-dashboard";
 import ProviderDashboard from "@/pages/dashboard/provider-dashboard";
+import AdminDashboard from "@/pages/dashboard/admin-dashboard";
+import ToastTestPage from "@/pages/toast-test";
 import NotFound from "@/pages/not-found";
 import { ProtectedRoute } from "@/lib/protected-route";
+import { UserRole } from "@shared/schema";
 
 function Router() {
   return (
     <Switch>
       <Route path="/" component={HomePage} />
       <Route path="/auth" component={AuthPage} />
-      <ProtectedRoute path="/dashboard/client" component={ClientDashboard} />
-      <ProtectedRoute path="/dashboard/provider" component={ProviderDashboard} />
+      <ProtectedRoute
+        path="/dashboard/client"
+        component={ClientDashboard}
+        requiredRole={UserRole.CLIENT}
+      />
+      <ProtectedRoute
+        path="/dashboard/provider"
+        component={ProviderDashboard}
+        requiredRole={UserRole.PROVIDER}
+      />
+      <ProtectedRoute
+        path="/dashboard/admin"
+        component={AdminDashboard}
+        requiredRole={UserRole.ADMIN}
+      />
+      <Route path="/toast-test" component={ToastTestPage} />
       <Route component={NotFound} />
     </Switch>
   );

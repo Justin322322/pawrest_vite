@@ -142,14 +142,14 @@ export const serviceTypes = [
     name: "Memorial Keepsakes",
     description: "Custom urns, paw prints, fur clippings, and personalized memorial items.",
     price: 69,
-    imageUrl: "https://images.unsplash.com/photo-1568807942916-85eaddb85858?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80",
+    imageUrl: "https://urnsuk.com/cdn/shop/files/UU500002C_21bb4901-2a4d-4ecc-a435-800a4514f2af.jpg?v=1692604194",
   },
   {
     id: 3,
     name: "Farewell Ceremonies",
     description: "Guided memorial services to celebrate your pet's life with family and friends.",
     price: 199,
-    imageUrl: "https://images.unsplash.com/photo-1583511655826-05700442cea1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80",
+    imageUrl: "https://pets.titancasket.com/cdn/shop/articles/pet_funeral.webp?v=1687196320",
   },
   {
     id: 4,
@@ -163,14 +163,14 @@ export const serviceTypes = [
     name: "Garden Memorials",
     description: "Beautiful garden stones, plaques, and plantable memorials to create a living tribute.",
     price: 89,
-    imageUrl: "https://images.unsplash.com/photo-1542856391-010fb87dcfed?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80",
+    imageUrl: "https://assets.wfcdn.com/im/52966382/compr-r85/2396/239629498/dog-pet-memorials-forever-in-our-hearts-statue.jpg",
   },
   {
     id: 6,
     name: "Grief Counseling",
     description: "Supportive counseling sessions to help you navigate the loss of your beloved companion.",
     price: 79,
-    imageUrl: "https://images.unsplash.com/photo-1557805058-28eaf9afd318?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80",
+    imageUrl: "https://www.verywellmind.com/thmb/2OPeF5kRG_fca-IbV-fHSPTExqc=/2121x0/filters:no_upscale():max_bytes(150000):strip_icc()/GettyImages-843530334-b8139ada86bf417eaf8fd30ead798786.jpg",
   }
 ];
 

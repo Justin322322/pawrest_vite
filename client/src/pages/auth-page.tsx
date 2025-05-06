@@ -561,9 +561,12 @@ export default function AuthPage() {
                     <Button
                       variant="outline"
                       className="w-full border-blue-300 text-blue-600 hover:bg-blue-50 hover:text-blue-700 transition-colors"
-                      asChild
+                      onClick={() => {
+                        setRegistrationType('client');
+                        setActiveTab('login');
+                      }}
                     >
-                      <Link href="/auth">Sign in</Link>
+                      Sign in
                     </Button>
                   </div>
                   <div className="text-center">

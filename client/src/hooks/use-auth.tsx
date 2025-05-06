@@ -4,17 +4,18 @@ import {
   useMutation,
   UseMutationResult,
 } from "@tanstack/react-query";
-import { 
-  insertUserSchema, 
-  User as SelectUser, 
-  InsertUser, 
-  UserRole, 
-  providerRegistrationSchema, 
+import {
+  insertUserSchema,
+  User as SelectUser,
+  InsertUser,
+  UserRole,
+  providerRegistrationSchema,
   BusinessInfo
 } from "@shared/schema";
 import { getQueryFn, apiRequest, queryClient } from "../lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
 import { useLocation } from "wouter";
+import { getUserFriendlyErrorMessage } from "@/lib/error-handler";
 
 // Custom type for registration that combines client and provider registration
 type RegisterData = {
@@ -61,25 +62,45 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       return await res.json();
     },
     onSuccess: (user: SelectUser) => {
+      console.log("Login successful, user data:", user);
+      console.log("User role:", user.role);
+
+      // Ensure the role is a valid UserRole enum value
+      if (!Object.values(UserRole).includes(user.role as UserRole)) {
+        console.error(`Invalid user role: ${user.role}`);
+        toast({
+          title: "Login error",
+          description: "Invalid user role. Please contact support.",
+          variant: "destructive",
+        });
+        return;
+      }
+
       queryClient.setQueryData(["/api/user"], user);
       toast({
         title: "Welcome back!",
         description: `Logged in as ${user.fullName}`,
+        variant: "success",
       });
-      
+
       // Redirect based on user role
+      console.log(`Redirecting user with role ${user.role} to appropriate dashboard`);
       if (user.role === UserRole.CLIENT) {
+        console.log("Redirecting to client dashboard");
         navigate("/dashboard/client");
       } else if (user.role === UserRole.PROVIDER) {
+        console.log("Redirecting to provider dashboard");
         navigate("/dashboard/provider");
       } else if (user.role === UserRole.ADMIN) {
+        console.log("Redirecting to admin dashboard");
         navigate("/dashboard/admin");
       }
     },
     onError: (error: Error) => {
+      const friendlyMessage = getUserFriendlyErrorMessage(error);
       toast({
         title: "Login failed",
-        description: error.message,
+        description: friendlyMessage,
         variant: "destructive",
       });
     },
@@ -95,8 +116,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       toast({
         title: "Account created!",
         description: `Welcome to PawRest, ${user.fullName}`,
+        variant: "success",
       });
-      
+
       // Redirect based on user role
       if (user.role === UserRole.CLIENT) {
         navigate("/dashboard/client");
@@ -105,9 +127,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       }
     },
     onError: (error: Error) => {
+      const friendlyMessage = getUserFriendlyErrorMessage(error);
       toast({
         title: "Registration failed",
-        description: error.message,
+        description: friendlyMessage,
         variant: "destructive",
       });
     },
@@ -122,13 +145,15 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       toast({
         title: "Logged out",
         description: "You have been successfully logged out",
+        variant: "info",
       });
       navigate("/");
     },
     onError: (error: Error) => {
+      const friendlyMessage = getUserFriendlyErrorMessage(error);
       toast({
         title: "Logout failed",
-        description: error.message,
+        description: friendlyMessage,
         variant: "destructive",
       });
     },
